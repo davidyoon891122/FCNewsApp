@@ -38,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         newsAdapter = NewsAdapter()
+
+
+        val newsService =  retrofit.create(NewsService::class.java)
+        newsService.mainFeed().submitList()
         binding.newsRecyclerView.apply {
 
             layoutManager = LinearLayoutManager(context)
@@ -45,8 +49,52 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        val newsService =  retrofit.create(NewsService::class.java)
-        newsService.mainFeed().enqueue(object: Callback<NewsRss> {
+        binding.feedChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.feedChip.isChecked = true
+
+            newsService.mainFeed().submitList()
+        }
+
+        binding.politicsChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.politicsChip.isChecked = true
+
+            newsService.politicsNews().submitList()
+        }
+
+        binding.economyChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.economyChip.isChecked = true
+
+            newsService.economyNews().submitList()
+        }
+
+        binding.socialChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.socialChip.isChecked = true
+
+            newsService.socialNews().submitList()
+        }
+
+        binding.itChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.itChip.isChecked = true
+
+            newsService.itNews().submitList()
+        }
+
+        binding.sportsChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.sportsChip.isChecked = true
+
+            newsService.sportsNews().submitList()
+        }
+
+    }
+
+    private fun Call<NewsRss>.submitList() {
+        this.enqueue(object: Callback<NewsRss> {
             override fun onResponse(p0: Call<NewsRss>, p1: Response<NewsRss>) {
                 Log.e("MainActivity", "${p1.body()?.channel?.items}")
 
@@ -84,6 +132,5 @@ class MainActivity : AppCompatActivity() {
                 p1.printStackTrace()
             }
         })
-
     }
 }
