@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fcnewsapp.databinding.ActivityMainBinding
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
+import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,7 +49,35 @@ class MainActivity : AppCompatActivity() {
         newsService.mainFeed().enqueue(object: Callback<NewsRss> {
             override fun onResponse(p0: Call<NewsRss>, p1: Response<NewsRss>) {
                 Log.e("MainActivity", "${p1.body()?.channel?.items}")
-                newsAdapter.submitList(p1.body()?.channel?.items.orEmpty())
+
+                val list = p1.body()?.channel?.items.orEmpty().transform()
+
+                newsAdapter.submitList(list)
+                list.forEachIndexed { index, news ->
+                    Thread {
+                        try {
+                            val jsoup = Jsoup.connect(news.link).get()
+                            val elements = jsoup.select("meta[property^=og:]")
+
+                            val ogImageNode = elements.find { node ->
+                                node.attr("property") == "og:image"
+                            }
+
+                            news.imageUrl = ogImageNode?.attr("content")
+                            Log.e("MainActivity", "${ogImageNode?.attr("content")}")
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+                        runOnUiThread {
+                            newsAdapter.notifyItemChanged(index)
+                        }
+
+
+                    }.start()
+                }
+
+
             }
 
             override fun onFailure(p0: Call<NewsRss>, p1: Throwable) {

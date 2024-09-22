@@ -35,7 +35,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures { 
+    buildFeatures {
         viewBinding = true
     }
 
@@ -57,6 +57,9 @@ dependencies {
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
 
     kapt("com.tickaroo.tikxml:processor:0.8.13")
+
+    implementation("org.jsoup:jsoup:1.18.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
