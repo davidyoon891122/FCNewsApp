@@ -11,74 +11,101 @@
         android:id="@+id/chipGroupScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
         >
+
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/feedChip"
-                android:text="피드"
-                android:checked="true"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="피드" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/politicsChip"
-                android:text="정치"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="정치" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/economyChip"
-                android:text="경제"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="경제" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/socialChip"
-                android:text="사회"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="사회" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/itChip"
-                android:text="정보기술"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="정보기술" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/sportsChip"
-                android:text="스포츠"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="스포츠" />
 
         </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newsRecyclerView"
-        app:layout_constraintTop_toBottomOf="@id/chipGroupScrollView"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_news"
+        app:layout_constraintTop_toBottomOf="@id/chipGroupScrollView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            tools:text="테스트"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+        tools:listitem="@layout/item_news" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
